@@ -7,6 +7,8 @@
 
 Sistem manajemen data pegawai yang modern dan user-friendly dengan fitur lengkap untuk mengelola informasi pegawai, jadwal kerja, dan user management.
 
+## Progres 50%
+
 ## ✨ Fitur Utama
 
 ### 👥 Manajemen Pegawai
