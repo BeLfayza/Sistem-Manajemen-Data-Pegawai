@@ -33,10 +33,6 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
           </div>
           <div class="user-info">
             <h6 class="text-white mb-2 fw-semibold"><?= ucfirst($username) ?></h6>
-            <span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-25 px-3 py-2">
-              <i class="fas fa-user-shield me-1"></i>
-              <?= ucfirst($role) ?>
-            </span>
           </div>
         </div>
 
