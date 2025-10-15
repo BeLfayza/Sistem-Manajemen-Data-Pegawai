@@ -83,7 +83,7 @@ include 'inc/header.php';
             <div class="text-center">
               <small class="text-muted">
                 <i class="fas fa-info-circle me-1"></i>
-                Demo: admin/admin atau user1/user1
+                Demo: admin/admin123 atau user1/user123
               </small>
             </div>
           </form>
@@ -93,7 +93,7 @@ include 'inc/header.php';
         <div class="text-center mt-4">
           <small class="text-white opacity-75">
             <i class="fas fa-code me-1"></i>
-            Sistem Manajemen Pegawai v1.0
+            Sistem Manajemen Pegawai v1.1
           </small>
         </div>
       </div>
