@@ -4,7 +4,15 @@ include '../inc/db.php';
 include '../inc/header.php';
 include '../inc/navbar.php';
 
+$role = $_SESSION['user']['role'];
+$user_pegawai_id = isset($_SESSION['user']['pegawai_id']) ? $_SESSION['user']['pegawai_id'] : null;
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Jika user biasa, hanya bisa melihat data pribadi
+if ($role !== 'admin' && $user_pegawai_id) {
+  $id = $user_pegawai_id;
+}
 
 if ($id > 0) {
   // Tampilkan jadwal pegawai tertentu
@@ -28,18 +36,29 @@ if ($id > 0) {
   
   $hari_list = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 } else {
-  // Tampilkan semua jadwal kerja
-  $result = mysqli_query($conn, "
-    SELECT p.*, 
-           GROUP_CONCAT(
-             CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
-             ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
-             SEPARATOR '<br>'
-           ) as jadwal_kerja
-    FROM pegawai p 
-    LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
-    GROUP BY p.id
-  ");
+  // Tampilkan semua jadwal kerja (hanya untuk admin)
+  if ($role === 'admin') {
+    $result = mysqli_query($conn, "
+      SELECT p.*, 
+             GROUP_CONCAT(
+               CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
+               ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
+               SEPARATOR '<br>'
+             ) as jadwal_kerja
+      FROM pegawai p 
+      LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
+      GROUP BY p.id
+    ");
+  } else {
+    // User biasa redirect ke jadwal pribadi
+    if ($user_pegawai_id) {
+      header('Location: jadwal.php?id=' . $user_pegawai_id);
+      exit;
+    } else {
+      header('Location: list.php');
+      exit;
+    }
+  }
 }
 ?>
 

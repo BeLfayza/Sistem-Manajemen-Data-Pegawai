@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user'] = [
                 'id' => $row['id'],
                 'username' => $row['username'],
-                'role' => $row['role']
+                'role' => $row['role'],
+                'pegawai_id' => $row['pegawai_id']
             ];
             header('Location: index.php');
             exit;

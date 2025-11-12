@@ -11,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $jabatan = mysqli_real_escape_string($conn, $_POST['jabatan']);
   $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
   $telepon = mysqli_real_escape_string($conn, $_POST['telepon']);
+  $tanggal_lahir = mysqli_real_escape_string($conn, $_POST['tanggal_lahir']);
   
   // Insert pegawai
-  $sql = "INSERT INTO pegawai (nama, nip, jabatan, alamat, telepon) VALUES ('$nama', '$nip', '$jabatan', '$alamat', '$telepon')";
+  $sql = "INSERT INTO pegawai (nama, nip, jabatan, alamat, telepon, tanggal_lahir) VALUES ('$nama', '$nip', '$jabatan', '$alamat', '$telepon', '$tanggal_lahir')";
   if (mysqli_query($conn, $sql)) {
     $pegawai_id = mysqli_insert_id($conn);
     
@@ -28,6 +29,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql_jadwal = "INSERT INTO jadwal_kerja (pegawai_id, hari, jam_masuk, jam_keluar, shift) 
                        VALUES ('$pegawai_id', '$hari', '$jam_masuk', '$jam_keluar', '$shift')";
         mysqli_query($conn, $sql_jadwal);
+      }
+    }
+    
+    // Buat user account otomatis
+    if (!empty($tanggal_lahir)) {
+      try {
+        // Extract first name (nama pertama)
+        $nama_parts = explode(' ', trim($nama));
+        $first_name = strtolower($nama_parts[0]);
+        
+        // Sanitize username: remove special characters, keep only alphanumeric
+        $first_name = preg_replace('/[^a-z0-9]/', '', $first_name);
+        
+        // Jika setelah sanitize kosong, gunakan 'user' sebagai default
+        if (empty($first_name)) {
+          $first_name = 'user';
+        }
+        
+        // Format tanggal lahir menjadi ddmmyyyy
+        $tgl_lahir = new DateTime($tanggal_lahir);
+        $password = $tgl_lahir->format('dmY'); // Format: ddmmyyyy
+        $password_hash = md5($password);
+        
+        // Cek apakah username sudah ada, jika ya tambahkan angka
+        $username = $first_name;
+        $counter = 1;
+        $max_attempts = 100; // Prevent infinite loop
+        while ($counter < $max_attempts) {
+          $check_username = mysqli_query($conn, "SELECT id FROM users WHERE username = '$username'");
+          if (mysqli_num_rows($check_username) == 0) {
+            break; // Username available
+          }
+          $username = $first_name . $counter;
+          $counter++;
+        }
+        
+        // Insert user dengan role 'user' dan pegawai_id
+        $sql_user = "INSERT INTO users (username, password, role, pegawai_id) VALUES ('$username', '$password_hash', 'user', '$pegawai_id')";
+        if (!mysqli_query($conn, $sql_user)) {
+          // Log error but don't fail the employee creation
+          error_log("Gagal membuat user account untuk pegawai ID: $pegawai_id. Error: " . mysqli_error($conn));
+        }
+      } catch (Exception $e) {
+        // Log error but don't fail the employee creation
+        error_log("Error saat membuat user account: " . $e->getMessage());
       }
     }
     
@@ -132,6 +178,21 @@ include '../inc/navbar.php';
               Nomor Telepon
             </label>
             <input type="text" name="telepon" class="form-control">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-birthday-cake text-primary me-1"></i>
+              Tanggal Lahir
+            </label>
+            <input type="date" name="tanggal_lahir" class="form-control" required>
+            <div class="invalid-feedback">
+              Tanggal lahir harus diisi
+            </div>
+            <small class="form-text text-muted">
+              <i class="fas fa-info-circle me-1"></i>
+              Tanggal lahir akan digunakan untuk membuat akun user (password: ddmmyyyy)
+            </small>
           </div>
         </div>
       </div>
@@ -411,6 +472,21 @@ include '../inc/navbar.php';
   }, false);
 })();
 
+// Function to determine shift based on time
+function getShiftFromTime(time) {
+  if (!time) return '';
+  const hour = parseInt(time.split(':')[0]);
+  
+  // Jam 7-12 = Pagi, 13-17 = Siang, 18-23 atau 0-6 = Malam
+  if (hour >= 7 && hour < 13) {
+    return 'Pagi';
+  } else if (hour >= 13 && hour < 18) {
+    return 'Siang';
+  } else {
+    return 'Malam';
+  }
+}
+
 // Enhanced jadwal functionality
 document.querySelectorAll('.jadwal-checkbox').forEach(function(checkbox) {
   checkbox.addEventListener('change', function() {
@@ -439,6 +515,31 @@ document.querySelectorAll('.jadwal-checkbox').forEach(function(checkbox) {
   
   // Trigger change event on page load
   checkbox.dispatchEvent(new Event('change'));
+});
+
+// Auto-select shift based on jam masuk
+document.querySelectorAll('input[name^="jam_masuk_"]').forEach(function(input) {
+  input.addEventListener('change', function() {
+    if (this.value && !this.disabled) {
+      // Get the hari from input name (e.g., "jam_masuk_Senin" -> "Senin")
+      const hari = this.name.replace('jam_masuk_', '');
+      const shiftSelect = document.querySelector('select[name="shift_' + hari + '"]');
+      
+      if (shiftSelect && !shiftSelect.disabled) {
+        const shift = getShiftFromTime(this.value);
+        if (shift) {
+          shiftSelect.value = shift;
+          
+          // Visual feedback
+          shiftSelect.style.transition = 'all 0.3s ease';
+          shiftSelect.style.backgroundColor = 'rgba(79, 70, 229, 0.1)';
+          setTimeout(() => {
+            shiftSelect.style.backgroundColor = '';
+          }, 500);
+        }
+      }
+    }
+  });
 });
 
 // Auto-save draft (optional feature)

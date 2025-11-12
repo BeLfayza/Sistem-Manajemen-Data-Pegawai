@@ -2,29 +2,34 @@ CREATE DATABASE `manajemen`;
 
 USE manajemen;
 
-CREATE TABLE `users` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `username` VARCHAR(50) NOT NULL UNIQUE,
-  `password` VARCHAR(255) NOT NULL,
-  `role` ENUM('admin','user') NOT NULL
-);
-
-INSERT INTO `users` (`username`, `password`, `role`) VALUES
-('admin', '0192023a7bbd73250516f069df18b500', 'admin'),
-('user1', '6ad14ba9986e3615423dfca256d04e3f', 'user');
-
+-- Create pegawai table first (needed for foreign key in users table)
 CREATE TABLE `pegawai` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `nama` VARCHAR(100) NOT NULL,
   `nip` VARCHAR(20) NOT NULL UNIQUE,
   `jabatan` VARCHAR(50) NOT NULL,
   `alamat` TEXT,
-  `telepon` VARCHAR(15)
+  `telepon` VARCHAR(15),
+  `tanggal_lahir` DATE
 );
 
-INSERT INTO `pegawai` (`nama`, `nip`, `jabatan`, `alamat`, `telepon`) VALUES
-('Budi Santoso', '123456', 'Manager', 'Jl. Merdeka No.1', '08123456789'),
-('Siti Aminah', '654321', 'Staff', 'Jl. Sudirman No.2', '08234567890');
+INSERT INTO `pegawai` (`nama`, `nip`, `jabatan`, `alamat`, `telepon`, `tanggal_lahir`) VALUES
+('Budi Santoso', '123456', 'Manager', 'Jl. Merdeka No.1', '08123456789', '1985-05-15'),
+('Siti Aminah', '654321', 'Staff', 'Jl. Sudirman No.2', '08234567890', '1990-03-20');
+
+-- Create users table with pegawai_id foreign key
+CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `role` ENUM('admin','user') NOT NULL,
+  `pegawai_id` INT NULL,
+  FOREIGN KEY (pegawai_id) REFERENCES pegawai(id) ON DELETE SET NULL
+);
+
+INSERT INTO `users` (`username`, `password`, `role`, `pegawai_id`) VALUES
+('admin', '0192023a7bbd73250516f069df18b500', 'admin', NULL),
+('user1', '6ad14ba9986e3615423dfca256d04e3f', 'user', NULL);
 
 CREATE TABLE `jadwal_kerja` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,

@@ -4,17 +4,42 @@ include '../inc/db.php';
 include '../inc/header.php';
 include '../inc/navbar.php';
 $role = $_SESSION['user']['role'];
-$result = mysqli_query($conn, "
-  SELECT p.*, 
-         GROUP_CONCAT(
-           CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
-           ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
-           SEPARATOR '<br>'
-         ) as jadwal_kerja
-  FROM pegawai p 
-  LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
-  GROUP BY p.id
-");
+$pegawai_id = isset($_SESSION['user']['pegawai_id']) ? $_SESSION['user']['pegawai_id'] : null;
+
+// Filter data berdasarkan role
+if ($role === 'admin') {
+  // Admin melihat semua data
+  $result = mysqli_query($conn, "
+    SELECT p.*, 
+           GROUP_CONCAT(
+             CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
+             ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
+             SEPARATOR '<br>'
+           ) as jadwal_kerja
+    FROM pegawai p 
+    LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
+    GROUP BY p.id
+  ");
+} else {
+  // User biasa hanya melihat data pribadi
+  if ($pegawai_id) {
+    $result = mysqli_query($conn, "
+      SELECT p.*, 
+             GROUP_CONCAT(
+               CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
+               ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
+               SEPARATOR '<br>'
+             ) as jadwal_kerja
+      FROM pegawai p 
+      LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
+      WHERE p.id = $pegawai_id
+      GROUP BY p.id
+    ");
+  } else {
+    // Jika tidak ada pegawai_id, tampilkan kosong
+    $result = mysqli_query($conn, "SELECT NULL as id WHERE 1=0");
+  }
+}
 
 // Hitung total pegawai
 $total_pegawai = mysqli_num_rows($result);
@@ -142,6 +167,10 @@ $total_pegawai = mysqli_num_rows($result);
               Telepon
             </th>
             <th class="border-0">
+              <i class="fas fa-birthday-cake text-muted me-1"></i>
+              Tanggal Lahir
+            </th>
+            <th class="border-0">
               <i class="fas fa-clock text-muted me-1"></i>
               Jadwal Kerja
             </th>
@@ -190,6 +219,16 @@ $total_pegawai = mysqli_num_rows($result);
                 <i class="fas fa-phone text-success me-1"></i>
                 <?= htmlspecialchars($row['telepon']) ?>
               </a>
+            </td>
+            <td>
+              <?php if (!empty($row['tanggal_lahir'])): ?>
+                <?php 
+                $tgl_lahir = new DateTime($row['tanggal_lahir']);
+                echo $tgl_lahir->format('d/m/Y');
+                ?>
+              <?php else: ?>
+                <span class="text-muted">-</span>
+              <?php endif; ?>
             </td>
             <td>
               <div class="jadwal-kerja-cell">

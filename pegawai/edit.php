@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $jabatan = mysqli_real_escape_string($conn, $_POST['jabatan']);
   $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
   $telepon = mysqli_real_escape_string($conn, $_POST['telepon']);
+  $tanggal_lahir = mysqli_real_escape_string($conn, $_POST['tanggal_lahir']);
   
   // Update pegawai
-  $sql = "UPDATE pegawai SET nama='$nama', nip='$nip', jabatan='$jabatan', alamat='$alamat', telepon='$telepon' WHERE id=$id";
+  $sql = "UPDATE pegawai SET nama='$nama', nip='$nip', jabatan='$jabatan', alamat='$alamat', telepon='$telepon', tanggal_lahir='$tanggal_lahir' WHERE id=$id";
   if (mysqli_query($conn, $sql)) {
     // Delete existing jadwal kerja
     mysqli_query($conn, "DELETE FROM jadwal_kerja WHERE pegawai_id=$id");
@@ -147,6 +148,20 @@ include '../inc/navbar.php';
                 <input type="text" name="telepon" class="form-control" 
                        value="<?= htmlspecialchars($data['telepon']) ?>" 
                        placeholder="Masukkan nomor telepon">
+              </div>
+              
+              <div class="form-group mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-birthday-cake me-1 text-muted"></i>
+                  Tanggal Lahir
+                </label>
+                <input type="date" name="tanggal_lahir" class="form-control" 
+                       value="<?= isset($data['tanggal_lahir']) ? htmlspecialchars($data['tanggal_lahir']) : '' ?>" 
+                       placeholder="Masukkan tanggal lahir" required>
+                <small class="form-text text-muted">
+                  <i class="fas fa-info-circle me-1"></i>
+                  Format: YYYY-MM-DD
+                </small>
               </div>
             </div>
           </div>
@@ -380,6 +395,21 @@ include '../inc/navbar.php';
 </style>
 
 <script>
+// Function to determine shift based on time
+function getShiftFromTime(time) {
+  if (!time) return '';
+  const hour = parseInt(time.split(':')[0]);
+  
+  // Jam 7-12 = Pagi, 13-17 = Siang, 18-23 atau 0-6 = Malam
+  if (hour >= 7 && hour < 13) {
+    return 'Pagi';
+  } else if (hour >= 13 && hour < 18) {
+    return 'Siang';
+  } else {
+    return 'Malam';
+  }
+}
+
 // Enhanced form functionality
 document.addEventListener('DOMContentLoaded', function() {
   // Enable/disable time inputs based on checkbox
@@ -406,6 +436,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Trigger change event on page load
     checkbox.dispatchEvent(new Event('change'));
+  });
+  
+  // Auto-select shift based on jam masuk
+  document.querySelectorAll('input[name^="jam_masuk_"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+      if (this.value && !this.disabled) {
+        // Get the hari from input name (e.g., "jam_masuk_Senin" -> "Senin")
+        const hari = this.name.replace('jam_masuk_', '');
+        const shiftSelect = document.querySelector('select[name="shift_' + hari + '"]');
+        
+        if (shiftSelect && !shiftSelect.disabled) {
+          const shift = getShiftFromTime(this.value);
+          if (shift) {
+            shiftSelect.value = shift;
+            
+            // Visual feedback
+            shiftSelect.style.transition = 'all 0.3s ease';
+            shiftSelect.style.backgroundColor = 'rgba(79, 70, 229, 0.1)';
+            setTimeout(() => {
+              shiftSelect.style.backgroundColor = '';
+            }, 500);
+          }
+        }
+      }
+    });
   });
   
   // Form validation
