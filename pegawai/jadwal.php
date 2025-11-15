@@ -38,17 +38,17 @@ if ($id > 0) {
 } else {
   // Tampilkan semua jadwal kerja (hanya untuk admin)
   if ($role === 'admin') {
-    $result = mysqli_query($conn, "
-      SELECT p.*, 
-             GROUP_CONCAT(
-               CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
-               ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
-               SEPARATOR '<br>'
-             ) as jadwal_kerja
-      FROM pegawai p 
-      LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
-      GROUP BY p.id
-    ");
+  $result = mysqli_query($conn, "
+    SELECT p.*, 
+           GROUP_CONCAT(
+             CONCAT(j.hari, ' (', TIME_FORMAT(j.jam_masuk, '%H:%i'), '-', TIME_FORMAT(j.jam_keluar, '%H:%i'), ' ', j.shift, ')')
+             ORDER BY FIELD(j.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')
+             SEPARATOR '<br>'
+           ) as jadwal_kerja
+    FROM pegawai p 
+    LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
+    GROUP BY p.id
+  ");
   } else {
     // User biasa redirect ke jadwal pribadi
     if ($user_pegawai_id) {
