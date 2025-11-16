@@ -94,7 +94,7 @@ include 'inc/header.php';
         <div class="text-center mt-4">
           <small class="text-white opacity-75">
             <i class="fas fa-code me-1"></i>
-            Sistem Manajemen Pegawai v1.1
+            Sistem Manajemen Pegawai v2.1
           </small>
         </div>
       </div>
