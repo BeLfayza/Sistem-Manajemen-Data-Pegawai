@@ -115,8 +115,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Add loading animation to buttons
-document.querySelectorAll('.btn').forEach(button => {
+// Add loading animation to buttons (exclude hamburger button)
+document.querySelectorAll('.btn:not(#hamburgerBtn)').forEach(button => {
   button.addEventListener('click', function() {
     if (!this.classList.contains('btn-loading')) {
       this.classList.add('btn-loading');
@@ -148,6 +148,77 @@ document.querySelectorAll('[title]').forEach(element => {
     const tooltip = document.querySelector('.custom-tooltip');
     if (tooltip) {
       tooltip.remove();
+    }
+  });
+});
+</script>
+
+<script>
+// Mobile sidebar toggle (pure JS)
+document.addEventListener('DOMContentLoaded', function() {
+  var hamburger = document.getElementById('hamburgerBtn');
+  var sidebar = document.getElementById('sidebarMenu');
+  var overlay = document.getElementById('sidebarOverlay');
+
+  console.log('Init sidebar:', { hamburger: !!hamburger, sidebar: !!sidebar, overlay: !!overlay });
+
+  function openSidebar(e) {
+    if (e) e.preventDefault();
+    if (!sidebar) return;
+    console.log('Opening sidebar');
+    sidebar.classList.add('active');
+    if (overlay) overlay.classList.add('show');
+  }
+
+  function closeSidebar(e) {
+    if (e) e.preventDefault();
+    if (!sidebar) return;
+    console.log('Closing sidebar');
+    sidebar.classList.remove('active');
+    if (overlay) overlay.classList.remove('show');
+  }
+
+  // Hamburger button toggle
+  if (hamburger) {
+    hamburger.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (sidebar && sidebar.classList.contains('active')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+  }
+
+  // Overlay click to close
+  if (overlay) {
+    overlay.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Overlay clicked, closing sidebar');
+      closeSidebar();
+    });
+  }
+
+  // Close when clicking nav links (mobile only)
+  if (sidebar) {
+    var navLinks = sidebar.querySelectorAll('.nav-link, a[href]');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (window.innerWidth < 768 && sidebar.classList.contains('active')) {
+          console.log('Nav link clicked on mobile, closing sidebar');
+          setTimeout(function() {
+            closeSidebar();
+          }, 100);
+        }
+      });
+    });
+  }
+
+  // Escape key to close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && sidebar && sidebar.classList.contains('active')) {
+      console.log('Escape pressed, closing sidebar');
+      closeSidebar();
     }
   });
 });

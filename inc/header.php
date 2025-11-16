@@ -796,6 +796,188 @@
         margin-top: 1rem;
       }
     }
+    /* ===== MOBILE SIDEBAR & HEADER (OFF-CANVAS) ===== */
+    :root {
+      --sidebar-width: 280px;
+    }
+
+    /* Container layout */
+    .sidebar-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .sidebar-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
+    .main-area {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content-wrapper {
+      flex: 1;
+    }
+
+    .mobile-header {
+      display: none !important;
+    }
+
+    .sidebar-overlay {
+      display: none !important;
+    }
+
+    /* Desktop layout - sidebar visible */
+    @media (min-width: 768px) {
+      .sidebar-layout {
+        flex-direction: row;
+      }
+
+      .sidebar-wrapper {
+        flex-direction: row;
+        width: 100%;
+      }
+
+      #sidebarMenu {
+        position: relative !important;
+        transform: none !important;
+        width: 280px !important;
+        height: auto !important;
+        flex-shrink: 0;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-top: 3rem !important;
+        margin: 0 !important;
+        float: none !important;
+      }
+
+      .main-area {
+        flex: 1;
+        width: calc(100% - 280px);
+        padding: 2rem 2rem 0 2rem;
+      }
+
+      .main-content-wrapper {
+        margin: 0 !important;
+      }
+
+      .mobile-header {
+        display: none !important;
+      }
+
+      .sidebar-overlay {
+        display: none !important;
+      }
+    }
+
+    /* Mobile layout - sidebar off-canvas */
+    @media (max-width: 767.98px) {
+      html, body {
+        overflow-x: hidden !important;
+      }
+
+      .sidebar-layout {
+        flex-direction: column;
+      }
+
+      .sidebar-wrapper {
+        position: relative;
+        flex-direction: row;
+      }
+
+      .mobile-header {
+        display: flex !important;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        box-shadow: var(--shadow-sm);
+        width: 100%;
+        order: -1;
+      }
+
+      .mobile-header .mobile-title {
+        font-size: 1rem;
+        color: var(--dark-color);
+      }
+
+      #sidebarMenu {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: var(--sidebar-width) !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1) !important;
+        z-index: 1100 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-top: 4.5rem !important;
+        margin: 0 !important;
+        flex-shrink: 0;
+      }
+
+      #sidebarMenu.active {
+        transform: translateX(0) !important;
+      }
+
+      .sidebar-overlay {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: opacity 0.25s ease, visibility 0.25s ease !important;
+        z-index: 1095 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+
+      .sidebar-overlay.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      .main-area {
+        width: 100% !important;
+        padding: 56px 1rem 0 1rem !important;
+      }
+
+      .main-content-wrapper {
+        margin: 0.5rem 0 !important;
+        padding: 1rem !important;
+      }
+
+      /* flexible grids for cards and quick actions */
+      .quick-actions .row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .quick-action-card,
+      .info-card,
+      .card {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 <body> 

@@ -3,10 +3,18 @@ if (!isset($_SESSION)) session_start();
 $role = isset($_SESSION['user']['role']) ? $_SESSION['user']['role'] : '';
 $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : '';
 ?>
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid sidebar-layout">
+  <!-- Mobile Header (only on small screens) -->
+  <div class="mobile-header d-md-none w-100">
+    <button id="hamburgerBtn" class="btn btn-primary">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="mobile-title ms-2 fw-bold">Dashboard</div>
+  </div>
+
+  <div class="sidebar-wrapper">
     <!-- Modern Sidebar -->
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse min-vh-100">
+    <nav id="sidebarMenu" class="sidebar">
       <div class="position-sticky pt-3">
         <!-- Brand Logo -->
         <div class="text-center mb-5">
@@ -82,6 +90,10 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
       </div>
     </nav>
 
+    <!-- Sidebar overlay for mobile -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
     <!-- Main Content Area -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+    <main class="main-area">
       <div class="main-content-wrapper"> 
+        
