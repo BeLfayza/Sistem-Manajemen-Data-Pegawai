@@ -965,10 +965,243 @@
         padding: 1rem !important;
       }
 
+      /* Mobile content - compact sizing */
+      .page-header {
+        padding: 1.25rem !important;
+      }
+
+      .page-title {
+        font-size: 1.25rem !important;
+      }
+
+      .page-subtitle {
+        font-size: 0.9rem !important;
+      }
+
+      .header-icon {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 1.5rem !important;
+      }
+
+      .header-content {
+        gap: 0.75rem !important;
+      }
+
+      /* Card sizing */
+      .card {
+        border-radius: 1rem !important;
+      }
+
+      .card-header {
+        padding: 1rem !important;
+      }
+
+      .card-body {
+        padding: 1rem !important;
+      }
+
+      /* Welcome card */
+      .welcome-card {
+        padding: 1.5rem 1rem !important;
+      }
+
+      .welcome-title {
+        font-size: 1.5rem !important;
+      }
+
+      .welcome-subtitle {
+        font-size: 0.95rem !important;
+      }
+
+      .avatar-circle {
+        width: 80px !important;
+        height: 80px !important;
+      }
+
+      .avatar-circle i {
+        font-size: 2rem !important;
+      }
+
+      /* Quick action cards */
+      .quick-action-card {
+        padding: 1.25rem 1rem !important;
+      }
+
+      .quick-action-card h5 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      .quick-action-card p {
+        font-size: 0.8rem !important;
+      }
+
+      .quick-action-icon {
+        width: 55px !important;
+        height: 55px !important;
+        margin: 0 auto 1rem !important;
+        font-size: 1.4rem !important;
+      }
+
+      /* Info cards */
+      .info-card {
+        padding: 1.25rem !important;
+      }
+
+      .info-icon {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.25rem !important;
+      }
+
+      .info-content h6 {
+        font-size: 1rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      .info-content ul li {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      /* Buttons */
+      .btn {
+        font-size: 0.75rem !important;
+        padding: 0.5rem 1rem !important;
+      }
+
+      /* Stats card */
+      .stats-card {
+        padding: 1.25rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+
+      .stats-card h6 {
+        font-size: 0.9rem !important;
+      }
+
+      .stats-card .display-4,
+      .stats-card .h3 {
+        font-size: 1.75rem !important;
+      }
+
+      /* Override Bootstrap grid for mobile - force 1 column */
+      .col-md-4,
+      .col-md-6,
+      .col-lg-3,
+      .col-lg-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      .row.g-3,
+      .row.g-4 {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+
+      .row.g-3 > [class*="col-"],
+      .row.g-4 > [class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+      }
+
+      /* Tables */
+      .table {
+        font-size: 0.8rem !important;
+      }
+
+      .table thead th {
+        padding: 0.75rem !important;
+        font-size: 0.75rem !important;
+      }
+
+      .table tbody td {
+        padding: 0.75rem !important;
+        font-size: 0.75rem !important;
+      }
+
+      /* Mobile responsive table - hide non-essential columns */
+      @media (max-width: 767.98px) {
+        /* Hide certain columns on very small screens */
+        .table th.d-none.d-lg-table-cell,
+        .table td.d-none.d-lg-table-cell,
+        .table th.d-none.d-xl-table-cell,
+        .table td.d-none.d-xl-table-cell {
+          display: none !important;
+        }
+
+        /* Show only essential columns on mobile */
+        .table th.d-none.d-md-table-cell,
+        .table td.d-none.d-md-table-cell {
+          display: table-cell !important;
+        }
+
+        /* Compact table on mobile */
+        .table {
+          font-size: 0.75rem !important;
+          width: 100%;
+          overflow-x: auto;
+        }
+
+        .table thead th {
+          padding: 0.5rem !important;
+          font-size: 0.7rem !important;
+          white-space: nowrap;
+        }
+
+        .table tbody td {
+          padding: 0.5rem !important;
+          font-size: 0.7rem !important;
+        }
+
+        /* Icon in table - smaller */
+        .table i {
+          font-size: 0.8rem !important;
+          margin-right: 0.25rem !important;
+        }
+
+        /* Avatar in table - smaller */
+        .avatar-sm {
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 0.9rem !important;
+        }
+
+        /* Badge in table - smaller */
+        .table .badge {
+          font-size: 0.65rem !important;
+          padding: 0.35rem 0.5rem !important;
+        }
+
+        /* Button in table - smaller */
+        .table .btn,
+        .table .btn-sm {
+          padding: 0.35rem 0.65rem !important;
+          font-size: 0.65rem !important;
+        }
+      }
+
+      /* Forms */
+      .form-control {
+        font-size: 0.9rem !important;
+        padding: 0.5rem 0.75rem !important;
+      }
+
+      .form-label {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.35rem !important;
+      }
+
       /* flexible grids for cards and quick actions */
       .quick-actions .row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: 1fr;
         gap: 1rem;
       }
 
