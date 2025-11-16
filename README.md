@@ -34,26 +34,6 @@ Sistem manajemen data pegawai yang modern dan user-friendly dengan fitur lengkap
 - **Interactive Elements** - Animasi dan transisi yang smooth
 - **Dark/Light Theme** - Tema yang nyaman untuk mata
 
-## 🚀 Teknologi yang Digunakan
-
-### Backend
-- **PHP 7.4+** - Server-side programming
-- **MySQL** - Database management
-- **Session Management** - User authentication
-- **SQL Injection Protection** - Keamanan database
-
-### Frontend
-- **Bootstrap 5.3.0** - CSS Framework
-- **Font Awesome 6.4.0** - Icon library
-- **Custom CSS** - Styling modern dengan CSS variables
-- **Vanilla JavaScript** - Interactive functionality
-
-### Design Features
-- **CSS Grid & Flexbox** - Modern layout system
-- **CSS Variables** - Consistent theming
-- **Smooth Animations** - Enhanced user experience
-- **Mobile-first** - Responsive design approach
-
 ## 📦 Instalasi
 
 ### Prerequisites
@@ -181,33 +161,6 @@ if (!$conn) {
 }
 ?>
 ```
-
-### Security Settings
-- Ubah password default setelah instalasi
-- Gunakan HTTPS untuk production
-- Regular backup database
-- Update PHP dan MySQL secara berkala
-
-## 🎨 Customization
-
-### Mengubah Tema Warna
-Edit CSS variables di `inc/header.php`:
-
-```css
-:root {
-  --primary-color: #4f46e5;    /* Warna utama */
-  --primary-dark: #3730a3;     /* Warna utama gelap */
-  --success-color: #10b981;    /* Warna sukses */
-  --warning-color: #f59e0b;    /* Warna peringatan */
-  --danger-color: #ef4444;     /* Warna bahaya */
-  --info-color: #06b6d4;       /* Warna info */
-}
-```
-
-### Menambah Field Pegawai
-1. Edit database schema di `database.sql`
-2. Update form di `pegawai/tambah.php` dan `pegawai/edit.php`
-3. Update query di `pegawai/list.php`
 
 ## 🐛 Troubleshooting
 
