@@ -233,22 +233,6 @@ Edit CSS variables di `inc/header.php`:
 - Cek ownership file dan folder
 - Pastikan web server bisa akses file
 
-## 🤝 Contributing
-
-Kontribusi sangat diterima! Silakan ikuti langkah berikut:
-
-1. Fork repository ini
-2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-### Guidelines
-- Ikuti coding standard PHP
-- Tambahkan komentar untuk kode yang kompleks
-- Test fitur baru sebelum submit
-- Update dokumentasi jika diperlukan
-
 ---
 
 <div align="center">
