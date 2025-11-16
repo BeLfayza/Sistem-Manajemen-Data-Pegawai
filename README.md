@@ -1,3 +1,5 @@
+# PROGRESS 50% (BIKIN UI NYA RAMAH MOBILE SUSAH NECK HURTS)
+
 # 📋 Sistem Manajemen Data Pegawai
 
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-blue.svg)](https://php.net)
@@ -6,8 +8,6 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Sistem manajemen data pegawai yang modern dan user-friendly dengan fitur lengkap untuk mengelola informasi pegawai, jadwal kerja, dan user management.
-
-# PROGRESS 50% (BIKIN UI NYA RAMAH MOBILE SUSAH NECK HURTS)
 
 ## ✨ Fitur Utama
 
