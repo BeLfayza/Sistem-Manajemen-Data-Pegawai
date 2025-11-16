@@ -34,14 +34,6 @@ Sistem manajemen data pegawai yang modern dan user-friendly dengan fitur lengkap
 - **Dark/Light Theme** - Tema yang nyaman untuk mata
 - **Off-Canvas Sidebar** - Menu hamburger untuk mobile dengan overlay
 
-### 📱 Mobile Features
-- **Hamburger Menu** - Navigasi collapse untuk layar kecil
-- **Off-Canvas Sidebar** - Sidebar slide-in dari kiri
-- **Touch Friendly** - Button dan elemen yang mudah diklik
-- **Optimized Grid** - Layout card yang responsive di semua ukuran layar
-- **Compact Tables** - Tabel yang tidak scroll horizontal di mobile
-- **No Horizontal Scroll** - Konten 100% fit di layar
-
 ## 📦 Instalasi
 
 ### Prerequisites
@@ -151,64 +143,6 @@ manajemen/
 - Tambah/edit/hapus user
 - Atur role dan permission
 
-## 📱 Responsive Design
-
-### Mobile First Approach
-Aplikasi ini didesain dengan **mobile-first approach** menggunakan:
-- **CSS Media Queries** - Breakpoint di 768px (mobile/desktop)
-- **Flexbox & Grid** - Layout modern yang adaptif
-- **Touch-Friendly UI** - Button dan elemen yang besar untuk touch
-
-### Fitur Mobile
-
-#### Hamburger Menu
-- **Toggle Button** - Tombol hamburger di mobile header
-- **Off-Canvas Sidebar** - Sidebar slide-in dari kiri
-- **Overlay Backdrop** - Dark overlay saat sidebar terbuka
-- **Smooth Animation** - Transisi 0.35s cubic-bezier
-- **Auto Close** - Sidebar otomatis tutup saat klik menu atau tekan ESC
-
-#### Responsive Components
-- **Cards** - Ukuran font dan padding otomatis disesuaikan
-- **Grid Layout** - Kolom otomatis menjadi 1 per baris di mobile
-- **Tables** - Kolom non-essential disembunyikan di mobile
-- **Buttons** - Ukuran dan font lebih kecil untuk mobile
-- **Icons** - Ukuran icon dikecilkan untuk konsistensi
-
-#### Breakpoints
-```css
-/* Mobile (< 768px) */
-- Hamburger menu visible
-- Sidebar off-canvas
-- 1 kolom layout
-- Compact font sizes
-- Smaller padding/margin
-
-/* Desktop (>= 768px) */
-- Sidebar fixed di kiri
-- Multi-column layout
-- Normal font sizes
-- Standard padding/margin
-```
-
-### Testing Responsiveness
-
-1. **Browser DevTools**
-   - Buka DevTools (F12)
-   - Klik Device Toolbar (Ctrl+Shift+M)
-   - Test di berbagai ukuran: 320px, 768px, 1024px
-
-2. **Real Device**
-   - Test di smartphone actual
-   - Test landscape dan portrait orientation
-   - Test dengan slow network (DevTools > Network)
-
-3. **Browser Compatibility**
-   - Chrome 90+
-   - Firefox 88+
-   - Safari 14+
-   - Edge 90+
-
 ## 🔧 Konfigurasi
 
 ### Database Configuration
@@ -257,44 +191,6 @@ if (!$conn) {
 - Periksa apakah ada JavaScript error
 - Pastikan elemen `#hamburgerBtn` dan `#sidebarMenu` ada
 - Cek apakah media query 767.98px trigger dengan benar
-
-## 📝 CSS Structure
-
-### File: `inc/header.php`
-
-Semua styling ada di dalam file ini dengan struktur:
-
-```css
-/* Global Styles */
-:root { --variables }
-* { reset }
-html, body { general }
-
-/* Component Styles */
-.sidebar { styling }
-.main-content-wrapper { styling }
-.card, .btn, etc { styling }
-
-/* Responsive Media Queries */
-@media (max-width: 767.98px) { mobile }
-@media (min-width: 768px) { desktop }
-```
-
-### JavaScript: `inc/footer.php`
-
-Sidebar toggle logic menggunakan vanilla JavaScript:
-- Event listener pada hamburger button
-- Toggle class `.active` pada sidebar
-- Show/hide overlay dengan class `.show`
-- Auto-close sidebar saat klik menu atau overlay
-- ESC key support untuk close
-
-```javascript
-// Contoh penggunaan
-document.getElementById('hamburgerBtn').addEventListener('click', () => {
-  sidebar.classList.toggle('active');
-});
-```
 
 ---
 
