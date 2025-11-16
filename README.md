@@ -7,7 +7,7 @@
 
 Sistem manajemen data pegawai yang modern dan user-friendly dengan fitur lengkap untuk mengelola informasi pegawai, jadwal kerja, dan user management.
 
-### Progress 50%
+# PROGRESS 50% (BIKIN UI NYA RAMAH MOBILE SUSAH NECK HURTS)
 
 ## ✨ Fitur Utama
 
