@@ -94,8 +94,9 @@ include '../inc/navbar.php';
         <i class="fas fa-user-plus"></i>
       </div>
       <div class="header-text">
-        <h1 class="page-title">Tambah Pegawai Baru</h1>
+        <h1 class="page-title">Tambah Pegawai dan User Baru</h1>
         <p class="page-subtitle">Isi informasi lengkap pegawai dan jadwal kerjanya</p>
+        <p class="page-subtitle">Nama Pertama = Username | Tanggal Lahir = Password</p>
       </div>
     </div>
     
