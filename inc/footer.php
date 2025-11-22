@@ -22,16 +22,16 @@
         </div>
         <div class="col-md-6 text-center text-md-end">
           <div class="footer-links">
-            <a href="#" class="footer-link" title="Tentang Kami">
+            <a href="https://belfayza.github.io/" class="footer-link" title="Tentang Kami">
               <i class="fas fa-info-circle"></i>
             </a>
-            <a href="#" class="footer-link" title="Bantuan">
+            <a href="https://github.com/BeLfayza/Sistem-Manajemen-Data-Pegawai/issues/new" class="footer-link" title="Bantuan">
               <i class="fas fa-question-circle"></i>
             </a>
-            <a href="#" class="footer-link" title="Kontak">
+            <a href="mailto:abel.fayza15@smk.belajar.id" class="footer-link" title="Kontak">
               <i class="fas fa-envelope"></i>
             </a>
-            <a href="#" class="footer-link" title="GitHub">
+            <a href="https://github.com/BeLfayza" class="footer-link" title="GitHub">
               <i class="fab fa-github"></i>
             </a>
           </div>

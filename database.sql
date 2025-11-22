@@ -52,3 +52,14 @@ INSERT INTO `jadwal_kerja` (`pegawai_id`, `hari`, `jam_masuk`, `jam_keluar`, `sh
 (2, 'Rabu', '09:00:00', '18:00:00', 'Siang'),
 (2, 'Kamis', '09:00:00', '18:00:00', 'Siang'),
 (2, 'Jumat', '09:00:00', '18:00:00', 'Siang'); 
+
+-- Table for attendance records
+CREATE TABLE `absensi` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL,
+  `tipe` ENUM('Masuk','Pulang') NOT NULL,
+  `waktu` DATETIME NOT NULL,
+  `status` VARCHAR(50) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

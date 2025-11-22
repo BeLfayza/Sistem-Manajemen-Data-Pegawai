@@ -62,6 +62,16 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
             </a>
           </li>
           
+          <?php if ($role !== 'admin'): ?>
+          <li class="nav-item mb-2">
+            <a class="nav-link <?= strpos($_SERVER['PHP_SELF'], 'absensi.php') !== false ? 'active' : '' ?>" 
+               href="/manajemen/user/absensi.php">
+              <i class="fas fa-clock me-3"></i>
+              <span>Absensi</span>
+            </a>
+          </li>
+          <?php endif; ?>
+          
           <?php if ($role === 'admin'): ?>
           <li class="nav-item mb-2">
             <a class="nav-link <?= strpos($_SERVER['PHP_SELF'], 'tambah.php') !== false ? 'active' : '' ?>" 
@@ -76,6 +86,14 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                href="/manajemen/user/list.php">
               <i class="fas fa-user-shield me-3"></i>
               <span>Kelola User</span>
+            </a>
+          </li>
+          
+          <li class="nav-item mb-2">
+            <a class="nav-link <?= strpos($_SERVER['PHP_SELF'], 'absensi_list.php') !== false ? 'active' : '' ?>" 
+               href="/manajemen/user/absensi_list.php">
+              <i class="fas fa-list me-3"></i>
+              <span>Daftar Absensi</span>
             </a>
           </li>
           <?php endif; ?>
