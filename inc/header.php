@@ -956,6 +956,11 @@
         visibility: visible !important;
       }
 
+      /* Hide sidebar logout link on mobile (use mobile header logout instead) */
+      .sidebar .nav-link.logout-link {
+        display: none !important;
+      }
+
       .main-area {
         width: 100% !important;
         padding: 56px 1rem 0 1rem !important;

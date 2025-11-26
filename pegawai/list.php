@@ -6,9 +6,13 @@ include '../inc/navbar.php';
 $role = $_SESSION['user']['role'];
 $pegawai_id = isset($_SESSION['user']['pegawai_id']) ? $_SESSION['user']['pegawai_id'] : null;
 
+// Get search parameter
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+
 // Filter data berdasarkan role
 if ($role === 'admin') {
   // Admin melihat semua data
+  $search_condition = !empty($search) ? "WHERE p.nama LIKE '%$search%'" : '';
 $result = mysqli_query($conn, "
   SELECT p.*, 
          GROUP_CONCAT(
@@ -18,6 +22,7 @@ $result = mysqli_query($conn, "
          ) as jadwal_kerja
   FROM pegawai p 
   LEFT JOIN jadwal_kerja j ON p.id = j.pegawai_id 
+  $search_condition
   GROUP BY p.id
 ");
 } else {
@@ -294,14 +299,22 @@ if ($role !== 'admin' && $total_pegawai > 0) {
         <i class="fas fa-table text-primary me-2"></i>
         Daftar Pegawai
       </h5>
-      <div class="d-flex gap-2 mt-2 mt-md-0">
+      <form method="GET" class="d-flex gap-2 mt-2 mt-md-0">
         <div class="input-group" style="min-width: 200px; max-width: 250px;">
           <span class="input-group-text bg-light border-end-0">
             <i class="fas fa-search text-muted"></i>
           </span>
-          <input type="text" class="form-control border-start-0" id="searchInput" placeholder="Cari pegawai...">
+          <input type="text" name="search" class="form-control border-start-0" id="searchInput" placeholder="Cari nama pegawai..." value="<?= htmlspecialchars($search) ?>">
+          <button class="btn btn-outline-secondary" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+          <?php if (!empty($search)): ?>
+            <a href="list.php" class="btn btn-outline-secondary">
+              <i class="fas fa-times"></i>
+            </a>
+          <?php endif; ?>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   

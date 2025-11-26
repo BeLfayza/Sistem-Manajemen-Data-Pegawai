@@ -6,10 +6,17 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 <div class="container-fluid sidebar-layout">
   <!-- Mobile Header (only on small screens) -->
   <div class="mobile-header d-md-none w-100">
-    <button id="hamburgerBtn" class="btn btn-primary">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="mobile-title ms-2 fw-bold">Dashboard</div>
+    <div class="d-flex align-items-center w-100">
+      <button id="hamburgerBtn" class="btn btn-primary">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="mobile-title ms-2 fw-bold">Dashboard</div>
+      <div class="ms-auto">
+        <a href="/manajemen/logout.php" id="mobileLogoutBtn" class="btn btn-outline-danger btn-sm" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="sidebar-wrapper">
@@ -18,11 +25,6 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
       <div class="position-sticky pt-3">
         <!-- Brand Logo -->
         <div class="text-center mb-5">
-          <div class="brand-logo mb-3">
-            <div class="brand-icon-container">
-              <i class="fas fa-users-cog fa-2x text-white"></i>
-            </div>
-          </div>
           <a class="navbar-brand text-white d-block" href="/manajemen/index.php">
             <span class="fw-bold fs-4">Manajemen</span><br>
             <small class="text-light opacity-75">Pegawai</small>

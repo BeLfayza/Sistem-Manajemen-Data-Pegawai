@@ -13,10 +13,6 @@ CREATE TABLE `pegawai` (
   `tanggal_lahir` DATE
 );
 
-INSERT INTO `pegawai` (`nama`, `nip`, `jabatan`, `alamat`, `telepon`, `tanggal_lahir`) VALUES
-('Budi Santoso', '123456', 'Manager', 'Jl. Merdeka No.1', '08123456789', '1985-05-15'),
-('Siti Aminah', '654321', 'Staff', 'Jl. Sudirman No.2', '08234567890', '1990-03-20');
-
 -- Create users table with pegawai_id foreign key
 CREATE TABLE `users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,8 +24,7 @@ CREATE TABLE `users` (
 );
 
 INSERT INTO `users` (`username`, `password`, `role`, `pegawai_id`) VALUES
-('admin', '0192023a7bbd73250516f069df18b500', 'admin', NULL),
-('user1', '6ad14ba9986e3615423dfca256d04e3f', 'user', NULL);
+('admin', '0192023a7bbd73250516f069df18b500', 'admin', NULL)
 
 CREATE TABLE `jadwal_kerja` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,

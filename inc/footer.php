@@ -115,6 +115,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// Logout confirmation for all logout links
+document.querySelectorAll('a[href*="logout.php"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var confirmed = confirm('Yakin ingin logout?');
+    if (!confirmed) {
+      e.preventDefault();
+      // stop other click handlers (like loading animation)
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      return false;
+    }
+    return true;
+  });
+});
+
 // Add loading animation to buttons (exclude hamburger button)
 document.querySelectorAll('.btn:not(#hamburgerBtn)').forEach(button => {
   button.addEventListener('click', function() {
