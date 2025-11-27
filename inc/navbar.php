@@ -27,7 +27,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         <div class="text-center mb-5">
           <a class="navbar-brand text-white d-block" href="/manajemen/index.php">
             <span class="fw-bold fs-4">Manajemen</span><br>
-            <small class="text-light opacity-75">Pegawai</small>
+            <small class="text-light opacity-75">Pegawai & Absensi</small>
           </a>
         </div>
 
